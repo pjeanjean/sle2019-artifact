@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension point="org.eclipse.emf.ecore.generated_package">
+		<package 
+			uri = "http://www.inria.fr/diverse/ale/repl/visitor2repl"
+			class = "fr.inria.diverse.ale.repl.visitor2repl.Visitor2replPackage"
+			genModel = "model/generated/Visitor2repl.genmodel" />
+	</extension>
+</plugin>

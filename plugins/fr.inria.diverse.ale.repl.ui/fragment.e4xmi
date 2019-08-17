@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_BxaXACerEeWxCPrV0pAZQQ">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_EI7oACerEeWxCPrV0pAZQQ" featurename="descriptors" parentElementId="xpath:/">
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_KMklcCerEeWxCPrV0pAZQQ" elementId="test.partDescFragment.ASampleE4View" label="DSL Shell" iconURI="platform:/plugin/fr.inria.diverse.ale.repl.ui/icons/Sample.png" tooltip="" category="REPL" contributionURI="bundleclass://fr.inria.diverse.ale.repl.ui/fr.inria.diverse.ale.repl.ui.parts.REPLView">
+      <tags>View</tags>
+      <tags>categoryTag:REPL</tags>
+      <toolbar xmi:id="_z17t0GxhEeSQ7v0akwhfjz" elementId="test.partDescFragment.Toolbar">
+        <children xsi:type="menu:ToolControl" xmi:id="_HKPQsIboEH3t77Wb7Enz2Q" elementId="test.partDescFragment.LanguageSelector" contributionURI="bundleclass://fr.inria.diverse.ale.repl.ui/fr.inria.diverse.ale.repl.ui.parts.LanguageSelector"/>
+      </toolbar>
+    </elements>
+  </fragments>
+</fragment:ModelFragments>
