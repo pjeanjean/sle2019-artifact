@@ -55,7 +55,7 @@ class Visitor2replFormatter extends AbstractFormatter2 {
 	}
 
 	def dispatch void format(Interpreter interpreter, extension IFormattableDocument document) {
-		interpreter.prepend[newLines=2]
+		interpreter.prepend[newLines=2; highPriority]
 		interpreter.interior[indent]
 		if (interpreter.initMethod !== null) {
 			interpreter.initMethod.format

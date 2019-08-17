@@ -5,8 +5,8 @@
     <semanticResources>logo.genmodel</semanticResources>
     <semanticResources>logo.dsl</semanticResources>
     <semanticResources>http://www.eclipse.org/emf/2002/Ecore</semanticResources>
-    <semanticResources>logo.v2r</semanticResources>
     <semanticResources>file:/home/rhiobet/ale-repl/languages/logo/fr.inria.diverse.logo.model/model/logo.ecore</semanticResources>
+    <semanticResources>logo.v2r</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" xmi:id="_X2CcUPetEeibOuTwy3yYyA">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']"/>
       <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" xmi:id="_X5OTMPetEeibOuTwy3yYyA" name="logo" repPath="#_X3QkUPetEeibOuTwy3yYyA">

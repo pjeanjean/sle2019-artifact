@@ -17,11 +17,10 @@ The current artifact also includes the specifications of two languages that were
 
 ## Requirements
 
-Even though this artifact should work on any platform supported by the GEMOC Studio, this was not tested extensively and, as such, we recommend to use a 64-bits Linux distribution.
-
-Other requirements are:
 - [Oracle JDK 9](https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase9-3934878.html)
 - [GEMOC Studio 3.1.0](http://gemoc.org/studio_releases/eclipse_package/updatesite/2019/07/29/V3.1.0.html)
+
+Also, please not that even though this artifact should work on any platform supported by the GEMOC Studio, this was not tested extensively and, as such, we recommend to use a 64-bits Linux distribution.
 
 ## Instructions
 
@@ -36,7 +35,7 @@ The easiest way to install it is to copy the files available in [xtext-fix](./xt
 
 Launch GEMOC with the required Java version, then go into the menu `Help -> Install new Software...`.
 Click on `Add...`, then `Local...` and select the [update-site](./update-site) folder, then `Add` again.
-Untick the `Group items by category` option and select both the `ALE` and `ALE-REPL` entries.
+Untick the `Group items by category` option and select both the `Action Language for EMF` and `Ale-Repl` entries.
 Finally, follow the installation steps and restart the GEMOC Studio.
 
 The update for the ALE plugin is necessary because the artifact requires at least version `1.0.0.201908141537`, still unavailable on the official update site at the time of writing.
@@ -55,7 +54,7 @@ Click on `Browse...` and select either [languages/logo](./languages/logo) or [la
 As introduced in the section `Technical Details and Implementation > DSL Specification Enhancement` of the paper, we defined a DSL dedicated to the specification of the metadata necessary to create a REPL from a DSL.
 An instance can be generated from the annotations we specified in the semantics of the two provided languages, namely `@init` and the multiple `@repl__...` annotations.
 You can find these semantics in either `fr.inria.diverse.logo.model/model/logo.ale` or `org.tetrabox.minijava.lang/minijava_exec.ale`.
-In order to generate a V2R model for these lnguages, you need to right click on the `.dsl` definition of these languages (here, they are right next to the semantics definition files and have the same name, except for the extension) and click on `Generate V2R`.
+In order to generate a V2R model for these languages, you need to right click on the `.dsl` definition of these languages (here, they are right next to the semantics definition files and have the same name, except for the extension) and click on `Generate V2R`.
 
 The generated file, available right next to the DSL file, has three distinct parts:
 - Import of the abstract syntax (used for cross references)
@@ -111,11 +110,19 @@ With `Logo_repl`:
 - help right
 - to square :c repeat 4 [ forward :c right 90 ] end
 - square 100
-- 7\*8
+- 7\*6
 
 With `MiniJava_repl`:
 - public class ClassA { public int[] array; }
 - ClassA a
+- a = new ClassA()
 - a.array = new int[5]
 - a.array[2] = 42
 - a.array
+
+## Known issues
+
+### Builtin LFS support not present/detected
+
+When starting the modeling workbench, the first instance of the GEMOC Studio might complain about the class `org.eclipse.jgit.lfs.BuiltinLFS` not being found.
+This is a currently known issue of the Studio, and it has nothing to do with our artifact and does not impact it, so this can be safely ignored.

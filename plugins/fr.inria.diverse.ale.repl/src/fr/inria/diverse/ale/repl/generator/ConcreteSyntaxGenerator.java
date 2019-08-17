@@ -537,6 +537,9 @@ public class ConcreteSyntaxGenerator {
 				"			if (previous === null) {",
 				"				return IScope.NULLSCOPE",
 				"			}",
+				"			if (previous.eClass.name.equals(\"Help\")) {",
+				"				return scopeForInterpretableInstruction(previous)",
+				"			}",
 				"			return Scopes.scopeFor(",
 				"					Collections.singleton(",
 				"							previous.eGet(previous.eClass.getEStructuralFeature(\"original\")) "
