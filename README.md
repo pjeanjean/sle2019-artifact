@@ -2,6 +2,11 @@
 
 Pierre Jeanjean, Benoit Combemale and Olivier Barais
 
+## Kick the tires
+
+The kick the tires phase highlighted some issues in using this artifact.
+These were addressed in the [answers.md](./answers.md) file.
+
 ## Development note
 
 The main repository used to develop this artifact is currently available at https://github.com/pjeanjean/ale-repl.
@@ -20,9 +25,12 @@ The current artifact also includes the specifications of two languages that were
 - [Oracle JDK 9](https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase9-3934878.html)
 - [GEMOC Studio 3.1.0](http://gemoc.org/studio_releases/eclipse_package/updatesite/2019/07/29/V3.1.0.html)
 
-Also, please not that even though this artifact should work on any platform supported by the GEMOC Studio, this was not tested extensively and, as such, we strongly recommend to use a 64-bits Linux distribution.
+This artifact might also run with `JDK 10`, but it is not recommended as the GEMOC Studio relies on `JavaFX` for parts of its UI, and we find that it is not trivial to properly install it on this specific version.
+**This artifact will not work with any JDK version greater than 10** since this specific version of the GEMOC Studio uses Xtext version `2.14`, not compatible with Java 11 (see [here](https://www.eclipse.org/Xtext/releasenotes.html#/releasenotes/2019/03/05/version-2-17-0)).
 
-If you are unable to satisfy one of these requirements, you can still run this artifact on a virtual machine built using the automated builder `Packer` (see next section).
+Also, please note that even though this artifact should work on any platform supported by the GEMOC Studio, this was not tested extensively and, as such, we recommend to use a 64-bits Linux distribution.
+
+We also provide a virtual machine built using the automated builder `Packer` that includes all these requirements, you can use it if your environment does not meet the required specifications.
 
 ## Virtual Machine
 
@@ -31,17 +39,18 @@ You can either use the VM available [here](https://github.com/pjeanjean/sle2019-
 The VM we provide runs Alpine Linux version 3.10.2 and already has `JDK9` and `GEMOC Studio 3.1.0` installed.
 The current version of the artifact is also included, and available at `/home/packer/sle2019-artifact`.
 
-We recommend to use the shortcut `Alt+F11` inside the GEMOC Studio in order to display it in full-screen, otherwise you might not see the progress bar at the bottom.
+**We recommend to use the shortcut `Alt+F11` inside the GEMOC Studio in order to display it in full-screen**, otherwise you might not see the progress bar at the bottom.
 
 Please note that due to focus management issues, some dialogs might appear stuck (during the artifact installation for example) while they are simply out of focus and waiting for a left click.
 
 ### Building the VM
 
 If you want to build your own version of the VM, you will need to install [Packer](https://www.packer.io/) and [VirtualBox](https://www.virtualbox.org/) (both are available on most package managers).
+For the sake of reproducibility, we recommend version `1.4.3` of Packer and version `6.0.10` of VirtualBox.
 
 From within the [packer](./packer) folder, run the command `packer build ale-repl.json`.
 
-The build should take around 30min (the longest step will be the download of the GEMOC Studio).
+The build should take around 30min (the longest step will be the download of the GEMOC Studio, where the output might appear stuck).
 Once it is finished, the image can be found in `packer/output-virtualbox-iso/Ale-REPL.ova`.
 
 ### Running the VM
@@ -64,12 +73,13 @@ This artifact generates `.xtext` files.
 However, current versions of Xtext have an ongoing issue (documented [here](https://github.com/eclipse/xtext-core/issues/1093)) that prevents a proper serialization of these files.
 As such, it is necessary to use the fix available [here](https://github.com/pjeanjean/xtext-core/tree/2.14-fix).
 The easiest way to install it is to copy the files available in [xtext-fix](./xtext-fix) and paste them in the Gemoc installation directory to overwrite the plugins pre-installed in version 3.1.0 of the GEMOC Studio.
+If you are on OSX, the target directory should be `/Applications/Eclipse.app/Contents/Eclipse`.
 
 ### Installing the artifact
 
 Launch GEMOC with the required Java version, then go into the menu `Help -> Install new Software...`.
 Click on `Add...`, then `Local...` and select the [update-site](./update-site) folder, then `Add` again.
-Untick the `Group items by category` option and select both the `Action Language for EMF` and `Ale-Repl` entries.
+Untick the `Group items by category` option (or you will not see all the features) and select both the `Action Language for EMF` and `Ale-Repl` entries.
 Finally, follow the installation steps and restart the GEMOC Studio.
 
 The update for the ALE plugin is necessary because the artifact requires at least version `1.0.0.201908141537`, still unavailable on the official update site at the time of writing.
@@ -130,9 +140,11 @@ Then click on `Run`.
 In the new GEMOC Studio, use the `Quick Access` text box on the top-right side of the interface to find the `DSL Shell` component and open it.
 
 This component is the one shown on Figure 11 of the paper.
+
 You need to specify a port available on your machine (any will do, you can use `22222` for example) if you want autocompletion through a LSP server, then you can chose a REPL from the `Languages` menu.
 
 After that, the component might take up to 10 seconds to finish loading and let you enter text at the bottom.
+Please note that the textbox at the bottom of the component will be disabled during the loading phase, so you should wait until you can select it before inputing commands.
 
 Using `Return` key will commit the typed instruction, `Tab` key will autocomplete keywords, and `Up` and `Down` arrows let you circle through the commands history.
 
@@ -160,3 +172,14 @@ With `MiniJava_repl`:
 
 When starting the modeling workbench, the first instance of the GEMOC Studio might complain about the class `org.eclipse.jgit.lfs.BuiltinLFS` not being found.
 This is a currently known issue of the Studio, and it has nothing to do with our artifact and does not impact it, so this can be safely ignored.
+
+### Issues with CCSL engine plugin
+
+Error messages concerning the plugin `org.eclipse.gemoc.execution.concurrent.ccsljavaengine.ui` might appear inside the modelling workbench.
+This plug-in is not used by the artifact at all, this issue is related to the GEMOC Studio and doesn't impact the process.
+
+### Language selector becomes unusable
+
+In the modeling workbench, the `DSL Shell` view provides a way to select and change the used REPL though the `Languages` menu.
+It should always be possible to load a new REPL, but sometimes the UI glitches and the language selector disappears.
+When this happens, you don't have to restart completely the GEMOC Studio, just close the `DSL Shell` component and open it again.

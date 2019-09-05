@@ -29,6 +29,7 @@ import org.eclipse.sirius.common.tools.api.resource.ResourceSetFactory;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.resource.impl.ChunkedResourceDescriptions;
 import org.eclipse.xtext.validation.CheckMode;
 import org.eclipse.xtext.validation.Issue;
 
@@ -105,6 +106,10 @@ public class REPLInterpreter {
 		this.resourceSetFactory = ResourceSetFactory.createFactory();
 		this.mainResourceSet = this.resourceSetFactory.createResourceSet(modelUri);
 		this.mainResourceSet.getLoadOptions().put("org.eclipse.xtext.scoping.LIVE_SCOPE", false);
+		this.mainResourceSet.eAdapters()
+				.add(new ChunkedResourceDescriptions.ChunkedResourceDescriptionsAdapter(
+						new ChunkedResourceDescriptions()));
+
 
 		this.mainResource = this.mainResourceSet.createResource(modelUri);
 		try {
@@ -199,11 +204,6 @@ public class REPLInterpreter {
 			newInstruction.eSet(previousFeature, this.caller.eGet(instructionFeature));
 		}
 		EcoreUtil2.resolveAll(resource);
-		
-		// Validate the resource
-		List<Issue> validationErrors = ((XtextResource) resource).getResourceServiceProvider()
-				.getResourceValidator().validate(resource, CheckMode.ALL, null).stream()
-				.filter(i -> i.getSeverity().equals(Severity.ERROR)).collect(Collectors.toList());
 			
 		// Print parsing errors after resolution and exit if any
 		if (resource.getErrors().size() > 0) {
@@ -213,6 +213,11 @@ public class REPLInterpreter {
 			this.mainResourceSet.getResources().remove(resource);
 			return false;
 		}
+		
+		// Validate the resource
+		List<Issue> validationErrors = ((XtextResource) resource).getResourceServiceProvider()
+				.getResourceValidator().validate(resource, CheckMode.ALL, null).stream()
+				.filter(i -> i.getSeverity().equals(Severity.ERROR)).collect(Collectors.toList());
 		
 		// Print validation errors if any
 		if (!validationErrors.isEmpty()) {

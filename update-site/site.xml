@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/fr.inria.diverse.ale.repl.feature_1.0.0.201908170958.jar" id="fr.inria.diverse.ale.repl.feature" version="1.0.0.201908170958">
-      <category name="ale_repl"/>
-   </feature>
    <feature url="features/org.eclipse.emf.ecoretools.ale.feature_1.0.0.201908162234.jar" id="org.eclipse.emf.ecoretools.ale.feature" version="1.0.0.201908162234">
       <category name="ale"/>
+   </feature>
+   <feature url="features/fr.inria.diverse.ale.repl.feature_1.0.0.201909051926.jar" id="fr.inria.diverse.ale.repl.feature" version="1.0.0.201909051926">
+      <category name="ale_repl"/>
    </feature>
    <category-def name="ale" label="ALE"/>
    <category-def name="ale_repl" label="ALE-REPL"/>
